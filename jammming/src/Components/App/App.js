@@ -10,54 +10,59 @@ class App extends React.Component {
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
+    this.savePlaylist = this.savePlaylist.bind(this);
     this.state = {
       SearchResults: [
         {
           name: 'Tiny Dancer',
           artist: 'Elton John',
           album: 'Madman Across The Water',
-          id: 1
+          id: 1,
         },
         {
           name: 'Stronger',
           artist: 'Britney Spears',
           album: 'Oops!... I Did It Again',
-          id: 2
+          id: 2,
         },
       ],
-      playlistName: "My playlist",
+      playlistName: 'My playlist',
       playlistTracks: [
         {
           name: 'Tiny Dancer',
           artist: 'Elton bob',
           album: 'Madman Across The Water',
-          id: 3
+          id: 3,
         },
         {
           name: 'Stronger',
           artist: 'Britney BOB',
           album: 'Oops!... I Did It Again',
-          id: 4
+          id: 4,
         },
-      ]
+      ],
     };
   }
   addTrack(track) {
-    for(let playlistTrack in this.state.playlistTracks) {
+    for (let playlistTrack in this.state.playlistTracks) {
       if (track.id === this.state.playlistTracks[playlistTrack].id) {
-        alert('Track already added!')
-        return
+        alert('Track already added!');
+        return;
       }
     }
-    this.setState({playlistTracks: [...this.state.playlistTracks, track]})
+    this.setState({ playlistTracks: [...this.state.playlistTracks, track] });
   }
   removeTrack(track) {
     let tracks = this.state.playlistTracks;
-    tracks = tracks.filter(currentTrack => currentTrack.id !== track.id)
-    this.setState({playlistTracks: tracks})
+    tracks = tracks.filter((currentTrack) => currentTrack.id !== track.id);
+    this.setState({ playlistTracks: tracks });
   }
   updatePlaylistName(name) {
-    this.setState({playlistName: name})
+    this.setState({ playlistName: name });
+  }
+  savePlaylist() {
+    const trackUris = this.state.playlistTracks.map((track) => track.uri);
+    console.log(trackUris);
   }
   render() {
     return (
@@ -68,15 +73,16 @@ class App extends React.Component {
         <div className="App">
           {/* Add a SearchBar component */}
           <div className="App-playlist">
-            <SearchResults 
-              SearchResults={this.state.SearchResults} 
+            <SearchResults
+              SearchResults={this.state.SearchResults}
               onAdd={this.addTrack}
             />
-            <Playlist 
-              playlistName={this.state.playlistName} 
-              playlistTracks={this.state.playlistTracks} 
+            <Playlist
+              playlistName={this.state.playlistName}
+              playlistTracks={this.state.playlistTracks}
               onRemove={this.removeTrack}
               onNameChange={this.updatePlaylistName}
+              onSave={this.savePlaylist}
             />
           </div>
         </div>
