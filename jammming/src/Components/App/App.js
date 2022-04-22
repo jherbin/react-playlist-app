@@ -15,7 +15,7 @@ class App extends React.Component {
     this.search = this.search.bind(this);
     this.state = {
       SearchResults: [],
-      playlistName: 'Jaco',
+      playlistName: 'New Playlist',
       playlistTracks: []
     };
   }

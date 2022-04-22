@@ -14,6 +14,7 @@ export default class SearchBar extends React.Component {
   handleTermChange(event) {
     this.setState({ term: event.target.value });
   }
+
   render() {
     return (
       <div className="SearchBar">
