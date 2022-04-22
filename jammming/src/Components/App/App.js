@@ -16,7 +16,7 @@ class App extends React.Component {
     this.state = {
       SearchResults: [],
       playlistName: 'New Playlist',
-      playlistTracks: []
+      playlistTracks: [],
     };
   }
   addTrack(track) {
@@ -38,16 +38,16 @@ class App extends React.Component {
   }
   savePlaylist() {
     const trackUris = this.state.playlistTracks.map((track) => track.uri);
-    Spotify.savePlaylist(this.state.playlistName, trackUris).then (() => {
+    Spotify.savePlaylist(this.state.playlistName, trackUris).then(() => {
       this.setState({
         playlistName: 'New Playlist',
-        playlistTracks: []
-      })
-    })
+        playlistTracks: [],
+      });
+    });
   }
   search(term) {
-    Spotify.search(term).then(SearchResults => {
-      this.setState({SearchResults: SearchResults})
+    Spotify.search(term).then((SearchResults) => {
+      this.setState({ SearchResults: SearchResults });
     });
   }
   render() {
@@ -57,7 +57,7 @@ class App extends React.Component {
           Ja<span className="highlight">mmm</span>ing
         </h1>
         <div className="App">
-          <SearchBar onSearch={this.search}/>
+          <SearchBar onSearch={this.search} />
           <div className="App-playlist">
             <SearchResults
               SearchResults={this.state.SearchResults}
