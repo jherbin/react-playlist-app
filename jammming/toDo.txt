@@ -1,0 +1,4 @@
+1. add switch current playlist/users playlists
+2. create a user playlists component that sends you to this playlist
+3. make a list of users playlists in uses playlists
+4. 

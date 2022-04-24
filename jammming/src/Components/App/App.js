@@ -13,11 +13,16 @@ class App extends React.Component {
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
+    this.switchShowingPlaylist = this.switchShowingPlaylist.bind(this);
     this.state = {
       SearchResults: [],
-      playlistName: 'New Playlist',
+      playlistName: 'Playlist name',
       playlistTracks: [],
+      showingPlaylist: true,
     };
+  }
+  switchShowingPlaylist() {
+    this.setState({ showingPlaylist: !this.state.showingPlaylist });
   }
   addTrack(track) {
     for (let playlistTrack in this.state.playlistTracks) {
@@ -66,9 +71,11 @@ class App extends React.Component {
             <Playlist
               playlistName={this.state.playlistName}
               playlistTracks={this.state.playlistTracks}
+              showingPlaylist={this.state.showingPlaylist}
               onRemove={this.removeTrack}
               onNameChange={this.updatePlaylistName}
               onSave={this.savePlaylist}
+              onSwitch={this.switchShowingPlaylist}
             />
           </div>
         </div>
