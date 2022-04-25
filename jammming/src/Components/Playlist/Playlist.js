@@ -13,18 +13,30 @@ export class Playlist extends Component {
   render() {
     return (
       <div className="Playlist">
-        <input
-          value={this.props.playlistName}
-          onChange={this.handleNameChange}
-        />
-        <TrackList
-          tracks={this.props.playlistTracks}
-          onRemove={this.props.onRemove}
-          isRemoval={true}
-        />
-        <button className="Playlist-save" onClick={this.props.onSave}>
-          SAVE TO SPOTIFY
-        </button>
+        {!this.props.isEditing && (
+          <button className="Playlist-switch" onClick={this.props.onSwitch}>
+            Show current playlist
+          </button>
+        )}
+        {this.props.isEditing && (
+          <div>
+            <button className="Playlist-switch" onClick={this.props.onSwitch}>
+              Show all playlists
+            </button>
+            <input
+              value={this.props.playlistName}
+              onChange={this.handleNameChange}
+            />
+            <TrackList
+              tracks={this.props.playlistTracks}
+              onRemove={this.props.onRemove}
+              isRemoval={true}
+            />
+            <button className="Playlist-save" onClick={this.props.onSave}>
+              SAVE TO SPOTIFY
+            </button>
+          </div>
+        )}
       </div>
     );
   }

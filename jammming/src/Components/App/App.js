@@ -13,11 +13,16 @@ class App extends React.Component {
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
+    this.switchEditingPlaylist = this.switchEditingPlaylist.bind(this);
     this.state = {
       SearchResults: [],
       playlistName: 'New Playlist',
       playlistTracks: [],
+      editingPlaylist: true,
     };
+  }
+  switchEditingPlaylist() {
+    this.setState({ editingPlaylist: !this.state.editingPlaylist });
   }
   addTrack(track) {
     for (let playlistTrack in this.state.playlistTracks) {
@@ -64,6 +69,8 @@ class App extends React.Component {
               onAdd={this.addTrack}
             />
             <Playlist
+              onSwitch={this.switchEditingPlaylist}
+              isEditing={this.state.editingPlaylist}
               playlistName={this.state.playlistName}
               playlistTracks={this.state.playlistTracks}
               onRemove={this.removeTrack}
