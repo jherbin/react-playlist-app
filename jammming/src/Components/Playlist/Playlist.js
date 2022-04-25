@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Playlist.css';
 import { TrackList } from '../TrackList/TrackList';
-import UserPlaylist from '../UserPlaylists/UserPlaylist';
+import UserPlaylist from '../UserPlaylist/UserPlaylist';
 
 export class Playlist extends Component {
   constructor(props) {
@@ -14,6 +14,9 @@ export class Playlist extends Component {
   }
   handleSwitch() {
     this.props.onSwitch();
+  }
+  handleGetPlaylists() {
+    this.props.getPlaylists();
   }
 
   render() {
@@ -46,7 +49,12 @@ export class Playlist extends Component {
             </button>
           </div>
         )}
-        {!this.props.showingPlaylist && <div>bob</div>}
+        {!this.props.showingPlaylist && (
+          <div onClick={this.handleGetPlaylists()}>bob</div>
+        )}
+        {!this.props.showingPlaylist && (
+          <UserPlaylist name={this.props.UserPlaylists.name}></UserPlaylist>
+        )}
       </div>
     );
   }

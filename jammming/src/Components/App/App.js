@@ -14,11 +14,14 @@ class App extends React.Component {
     this.savePlaylist = this.savePlaylist.bind(this);
     this.search = this.search.bind(this);
     this.switchShowingPlaylist = this.switchShowingPlaylist.bind(this);
+    this.updateUserPlaylists = this.updateUserPlaylists.bind(this);
+    this.getPlaylists = this.getPlaylists.bind(this);
     this.state = {
       SearchResults: [],
       playlistName: 'Playlist name',
       playlistTracks: [],
       showingPlaylist: true,
+      userPlaylists: []
     };
   }
   switchShowingPlaylist() {
@@ -40,6 +43,14 @@ class App extends React.Component {
   }
   updatePlaylistName(name) {
     this.setState({ playlistName: name });
+  }
+  updateUserPlaylists() {
+    this.setState({
+      userPlaylists: Spotify.getPlaylists()
+    })
+  }
+  getPlaylists() {
+    Spotify.getPlaylists();
   }
   savePlaylist() {
     const trackUris = this.state.playlistTracks.map((track) => track.uri);
@@ -72,10 +83,13 @@ class App extends React.Component {
               playlistName={this.state.playlistName}
               playlistTracks={this.state.playlistTracks}
               showingPlaylist={this.state.showingPlaylist}
+              userPlaylists={this.state.userPlaylists}
               onRemove={this.removeTrack}
               onNameChange={this.updatePlaylistName}
               onSave={this.savePlaylist}
               onSwitch={this.switchShowingPlaylist}
+              onUpdateUserPlaylists={this.updateUserPlaylists}
+              getPlaylists={this.getPlaylists}
             />
           </div>
         </div>
