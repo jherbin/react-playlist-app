@@ -22,6 +22,18 @@ const Spotify = {
       window.location = accessURL;
     }
   },
+
+  getUserName() {
+    const accessToken = Spotify.getAccessToken();
+    const headers = { Authorization: `Bearer ${accessToken}` };
+    return fetch(`https://api.spotify.com/v1/me`, { headers: headers })
+      .then((response) => response.json())
+      .then((jsonResponse) => {
+        console.log(jsonResponse.display_name);
+        return jsonResponse.display_name;
+      });
+  },
+
   search(term) {
     const accessToken = Spotify.getAccessToken();
     return fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`, {

@@ -15,6 +15,7 @@ class App extends React.Component {
     this.search = this.search.bind(this);
     this.switchEditingPlaylist = this.switchEditingPlaylist.bind(this);
     this.state = {
+      userName: 'test',
       SearchResults: [],
       playlistName: 'New Playlist',
       playlistTracks: [],
@@ -55,12 +56,16 @@ class App extends React.Component {
       this.setState({ SearchResults: SearchResults });
     });
   }
+  async componentDidMount() {
+    this.setState({ userName: await Spotify.getUserName().display_name });
+  }
   render() {
     return (
       <div>
         <h1>
           Ja<span className="highlight">mmm</span>ing
         </h1>
+        <div>User: {this.state.userName}</div>
         <div className="App">
           <SearchBar onSearch={this.search} />
           <div className="App-playlist">
