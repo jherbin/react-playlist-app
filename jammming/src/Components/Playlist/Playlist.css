@@ -10,6 +10,28 @@
   box-shadow: 0 4px 2px 2px #000000;
 }
 
+#switch {
+  display: none;
+
+}
+
+#switchLabel {
+  cursor: pointer;
+  width: 10rem;
+  padding: 0.77rem 0;
+  border-radius: 54px;
+  border-width: 0px;
+  background-color: #6c41ec;
+  text-align: center;
+  font-size: 0.83rem;
+  transition: background-color 0.25s;
+  color: #fff;
+  font-weight: 500;
+}
+#switchLabel:hover {
+  background-color: rgba(108, 65, 233, 0.7);
+}
+
 .Playlist input {
   width: 100%;
   border: 0;
