@@ -33,6 +33,23 @@ const Spotify = {
       });
   },
 
+  deletePlaylist(ID) {
+    const accessToken = Spotify.getAccessToken();
+    const headers = { Authorization: `Bearer ${accessToken}` };
+    return fetch(`https://api.spotify.com/v1/me`, { headers: headers })
+      .then((response) => response.json())
+      .then((jsonResponse) => {
+        const userId = jsonResponse.id;
+        return fetch(
+          `https://api.spotify.com/v1/users/${userId}/playlists/${ID}/followers`,
+          {
+            headers: headers,
+            method: 'DELETE',
+          }
+        );
+      });
+  },
+
   search(term) {
     const accessToken = Spotify.getAccessToken();
     return fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`, {

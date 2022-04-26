@@ -3,7 +3,6 @@ import './Playlist.css';
 import { TrackList } from '../TrackList/TrackList';
 import PlaylistList from '../PlaylistList/PlaylistList';
 
-
 export class Playlist extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +27,10 @@ export class Playlist extends Component {
             <button className="Playlist-switch" onClick={this.props.onSwitch}>
               Show current playlist
             </button>
-            <PlaylistList playlists={this.props.playlists} />
+            <PlaylistList
+              playlists={this.props.playlists}
+              deletePlaylist={this.props.deletePlaylist}
+            />
           </div>
         )}
         {this.props.isEditing && (

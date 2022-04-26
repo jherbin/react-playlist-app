@@ -1,0 +1,26 @@
+.Playlist-name {
+    display: inline-flex;
+}
+
+.APlaylist {
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(256, 256, 256, 0.8);
+    margin-bottom: 0.22rem;
+}
+button {
+    border-radius: 10px;
+}
+.play {
+    background-color: green;
+    color: white;
+}
+.edit {
+    background-color: blueviolet;
+    color: white;
+}
+.delete {
+    background-color: brown;
+    color: white;
+}
