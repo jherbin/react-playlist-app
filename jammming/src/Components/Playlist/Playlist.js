@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Playlist.css';
 import { TrackList } from '../TrackList/TrackList';
+import PlaylistList from '../PlaylistList/PlaylistList';
 
 export class Playlist extends Component {
   constructor(props) {
@@ -14,9 +15,12 @@ export class Playlist extends Component {
     return (
       <div className="Playlist">
         {!this.props.isEditing && (
-          <button className="Playlist-switch" onClick={this.props.onSwitch}>
-            Show current playlist
-          </button>
+          <div>
+            <button className="Playlist-switch" onClick={this.props.onSwitch}>
+              Show current playlist
+            </button>
+            <PlaylistList playlists={this.props.playlists} />
+          </div>
         )}
         {this.props.isEditing && (
           <div>

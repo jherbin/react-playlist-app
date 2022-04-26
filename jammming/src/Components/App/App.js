@@ -15,11 +15,12 @@ class App extends React.Component {
     this.search = this.search.bind(this);
     this.switchEditingPlaylist = this.switchEditingPlaylist.bind(this);
     this.state = {
-      userName: 'test',
+      userName: '',
       SearchResults: [],
       playlistName: 'New Playlist',
       playlistTracks: [],
       editingPlaylist: true,
+      Playlists: [],
     };
   }
   switchEditingPlaylist() {
@@ -56,8 +57,13 @@ class App extends React.Component {
       this.setState({ SearchResults: SearchResults });
     });
   }
-  async componentDidMount() {
-    this.setState({ userName: await Spotify.getUserName().display_name });
+  componentDidMount() {
+    Spotify.getUserName().then((userName) =>
+      this.setState({ userName: userName })
+    );
+    Spotify.getPlaylists().then((playlists) =>
+      this.setState({ Playlists: playlists })
+    );
   }
   render() {
     return (
@@ -65,7 +71,7 @@ class App extends React.Component {
         <h1>
           Ja<span className="highlight">mmm</span>ing
         </h1>
-        <div>User: {this.state.userName}</div>
+        <div className="userName">Logged as: {this.state.userName}</div>
         <div className="App">
           <SearchBar onSearch={this.search} />
           <div className="App-playlist">
@@ -81,6 +87,7 @@ class App extends React.Component {
               onRemove={this.removeTrack}
               onNameChange={this.updatePlaylistName}
               onSave={this.savePlaylist}
+              playlists={this.state.Playlists}
             />
           </div>
         </div>

@@ -13,6 +13,11 @@
   }
 }
 
+.userName {
+  display: inline-block;
+  align-self: flex-end;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
