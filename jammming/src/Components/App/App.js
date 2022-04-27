@@ -29,7 +29,6 @@ class App extends React.Component {
 
   startEditingPlaylist(ID) {
     Spotify.getPlaylist(ID).then((playlist) => {
-      console.log(playlist);
       this.setState({
         playlistName: playlist.name,
         playlistTracks: playlist.tracks.items,
@@ -117,7 +116,6 @@ class App extends React.Component {
               playlistName={this.state.playlistName}
               playlistTracks={this.state.playlistTracks}
               showingPlaylist={this.state.showingPlaylist}
-              userPlaylists={this.state.userPlaylists}
               onRemove={this.removeTrack}
               onNameChange={this.updatePlaylistName}
               onSave={this.savePlaylist}

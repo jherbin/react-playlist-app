@@ -23,6 +23,45 @@ const Spotify = {
     }
   },
 
+  changePlaylistItems(ID, trackUris) {
+    const accessToken = Spotify.getAccessToken();
+    const headers = { Authorization: `Bearer ${accessToken}` };
+    return fetch('https://api.spotify.com/v1/me', { headers: headers })
+      .then((response) => response.json())
+      .then((jsonResponse) => {
+        const userId = jsonResponse.id;
+        return fetch(
+          `https://api.spotify.com/v1/users/${userId}/playlists/${ID}/tracks`,
+          {
+            headers: headers,
+            method: 'PUT',
+            body: JSON.stringify({ uris: trackUris }),
+          }
+        );
+      });
+  },
+
+  changePlaylistName(ID, name) {
+    if (!name) {
+      return;
+    }
+    const accessToken = Spotify.getAccessToken();
+    const headers = { Authorization: `Bearer ${accessToken}` };
+    return fetch(`https://api.spotify.com/v1/me`, { headers: headers })
+      .then((response) => response.json())
+      .then((jsonResponse) => {
+        const userId = jsonResponse.id;
+        return fetch(
+          `https://api.spotify.com/v1/users/${userId}/playlists/${ID}`,
+          {
+            headers: headers,
+            method: 'PUT',
+            body: JSON.stringify({ name: name }),
+          }
+        );
+      });
+  },
+
   getPlaylist(ID) {
     const accessToken = Spotify.getAccessToken();
     const headers = { Authorization: `Bearer ${accessToken}` };
@@ -36,7 +75,9 @@ const Spotify = {
             headers: headers,
             method: 'GET',
           }
-        ).then((response) => response.json());
+        ).then((response) => {
+          return response.json();
+        });
       });
   },
 
@@ -79,10 +120,11 @@ const Spotify = {
         if (!jsonResponse.tracks) {
           return [];
         }
+        console.log(jsonResponse);
         return jsonResponse.tracks.items.map((track) => ({
           id: track.id,
           name: track.name,
-          artist: track.artists[0].name,
+          artists: track.artists,
           album: track.album.name,
           uri: track.uri,
         }));
@@ -105,7 +147,6 @@ const Spotify = {
             respond.items.map((playlist) => ({
               id: playlist.id,
               name: playlist.name,
-              uri: playlist.uri,
             }))
           );
       });
