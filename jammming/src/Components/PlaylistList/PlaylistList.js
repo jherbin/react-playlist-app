@@ -10,6 +10,7 @@ export class PlaylistList extends Component {
             key={playlist.id}
             playlist={playlist}
             deletePlaylist={this.props.deletePlaylist}
+            startEditing={this.props.startEditing}
           />
         ))}
       </div>

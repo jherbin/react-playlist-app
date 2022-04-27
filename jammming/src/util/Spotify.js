@@ -23,6 +23,23 @@ const Spotify = {
     }
   },
 
+  getPlaylist(ID) {
+    const accessToken = Spotify.getAccessToken();
+    const headers = { Authorization: `Bearer ${accessToken}` };
+    return fetch(`https://api.spotify.com/v1/me`, { headers: headers })
+      .then((response) => response.json())
+      .then((jsonResponse) => {
+        const userId = jsonResponse.id;
+        return fetch(
+          `https://api.spotify.com/v1/users/${userId}/playlists/${ID}`,
+          {
+            headers: headers,
+            method: 'GET',
+          }
+        ).then((response) => response.json());
+      });
+  },
+
   getUserName() {
     const accessToken = Spotify.getAccessToken();
     const headers = { Authorization: `Bearer ${accessToken}` };

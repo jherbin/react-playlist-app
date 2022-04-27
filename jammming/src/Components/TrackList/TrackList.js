@@ -10,7 +10,7 @@ export class TrackList extends Component {
           <Track
             track={oneTrack}
             onAdd={this.props.onAdd}
-            key={oneTrack.id}
+            key={oneTrack.track.id}
             onRemove={this.props.onRemove}
             isRemoval={this.props.isRemoval}
           />

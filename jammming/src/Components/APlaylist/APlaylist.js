@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './APlaylist.css';
 
-//https://open.spotify.com/playlist/playlistID
 export class APlaylist extends Component {
   constructor(props) {
     super(props);
     this.play = this.play.bind(this);
     this.delete = this.delete.bind(this);
+    this.startEditing = this.startEditing.bind(this);
   }
   play() {
     window.open(
@@ -16,6 +16,9 @@ export class APlaylist extends Component {
   }
   delete() {
     this.props.deletePlaylist(this.props.playlist.id);
+  }
+  startEditing() {
+    this.props.startEditing(this.props.playlist.id);
   }
   render() {
     return (
@@ -27,7 +30,9 @@ export class APlaylist extends Component {
           <button className="play" onClick={this.play}>
             Play
           </button>
-          <button className="edit">Edit</button>
+          <button className="edit" onClick={this.startEditing}>
+            Edit
+          </button>
           <button className="delete" onClick={this.delete}>
             Delete
           </button>

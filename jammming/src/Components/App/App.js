@@ -15,6 +15,7 @@ class App extends React.Component {
     this.search = this.search.bind(this);
     this.switchEditingPlaylist = this.switchEditingPlaylist.bind(this);
     this.deletePlaylist = this.deletePlaylist.bind(this);
+    this.startEditingPlaylist = this.startEditingPlaylist.bind(this);
 
     this.state = {
       userName: '',
@@ -25,6 +26,18 @@ class App extends React.Component {
       Playlists: [],
     };
   }
+
+  startEditingPlaylist(ID) {
+    Spotify.getPlaylist(ID).then((playlist) => {
+      console.log(playlist);
+      this.setState({
+        playlistName: playlist.name,
+        playlistTracks: playlist.tracks.items,
+        editingPlaylist: true,
+      });
+    });
+  }
+
   deletePlaylist(ID) {
     Spotify.deletePlaylist(ID).then(
       this.setState({
@@ -36,6 +49,10 @@ class App extends React.Component {
   }
   switchEditingPlaylist() {
     this.setState({ editingPlaylist: !this.state.editingPlaylist });
+    if (this.state.editingPlaylist)
+      Spotify.getPlaylists().then((playlists) =>
+        this.setState({ Playlists: playlists })
+      );
   }
   addTrack(track) {
     for (let playlistTrack in this.state.playlistTracks) {
@@ -106,6 +123,7 @@ class App extends React.Component {
               onSave={this.savePlaylist}
               playlists={this.state.Playlists}
               deletePlaylist={this.deletePlaylist}
+              startEditing={this.startEditingPlaylist}
             />
           </div>
         </div>
