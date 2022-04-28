@@ -16,10 +16,9 @@ export class Track extends Component {
     return (
       <div className="Track">
         <div className="Track-information">
-          <h3>{this.props.track.track.name}</h3>
+          <h3>{this.props.track.name}</h3>
           <p>
-            {this.props.track.track.artists[0].name} |{' '}
-            {this.props.track.track.album.name}
+            {this.props.track.artists[0].name} | {this.props.track.album.name}
           </p>
         </div>
         {this.props.isRemoval ? (

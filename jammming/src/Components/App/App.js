@@ -22,7 +22,7 @@ class App extends React.Component {
       SearchResults: [],
       playlistName: 'Playlist name',
       playlistTracks: [],
-      editingPlaylist: true,
+      editingPlaylist: false,
       Playlists: [],
     };
   }
@@ -31,7 +31,7 @@ class App extends React.Component {
     Spotify.getPlaylist(ID).then((playlist) => {
       this.setState({
         playlistName: playlist.name,
-        playlistTracks: playlist.tracks.items,
+        playlistTracks: playlist,
         editingPlaylist: true,
       });
     });

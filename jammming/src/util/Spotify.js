@@ -62,25 +62,6 @@ const Spotify = {
       });
   },
 
-  getPlaylist(ID) {
-    const accessToken = Spotify.getAccessToken();
-    const headers = { Authorization: `Bearer ${accessToken}` };
-    return fetch(`https://api.spotify.com/v1/me`, { headers: headers })
-      .then((response) => response.json())
-      .then((jsonResponse) => {
-        const userId = jsonResponse.id;
-        return fetch(
-          `https://api.spotify.com/v1/users/${userId}/playlists/${ID}`,
-          {
-            headers: headers,
-            method: 'GET',
-          }
-        ).then((response) => {
-          return response.json();
-        });
-      });
-  },
-
   getUserName() {
     const accessToken = Spotify.getAccessToken();
     const headers = { Authorization: `Bearer ${accessToken}` };
@@ -120,14 +101,8 @@ const Spotify = {
         if (!jsonResponse.tracks) {
           return [];
         }
-        console.log(jsonResponse);
-        return jsonResponse.tracks.items.map((track) => ({
-          id: track.id,
-          name: track.name,
-          artists: track.artists,
-          album: track.album.name,
-          uri: track.uri,
-        }));
+        console.log(jsonResponse.tracks.items);
+        return jsonResponse.tracks.items;
       });
   },
 
@@ -149,6 +124,35 @@ const Spotify = {
               name: playlist.name,
             }))
           );
+      });
+  },
+
+  getPlaylist(ID) {
+    const accessToken = Spotify.getAccessToken();
+    const headers = { Authorization: `Bearer ${accessToken}` };
+    return fetch(`https://api.spotify.com/v1/me`, { headers: headers })
+      .then((response) => response.json())
+      .then((jsonResponse) => {
+        const userId = jsonResponse.id;
+        return fetch(
+          `https://api.spotify.com/v1/users/${userId}/playlists/${ID}/tracks`,
+          {
+            headers: headers,
+            method: 'GET',
+          }
+        )
+          .then((respond) => respond.json())
+          .then((response) => {
+            const responseArray = response.items.map((track) => ({
+              album: track.track.album,
+              artists: track.track.artists,
+              id: track.track.id,
+              name: track.track.name,
+              uri: track.track.uri,
+            }));
+            console.log(responseArray);
+            return responseArray;
+          });
       });
   },
 
