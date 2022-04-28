@@ -101,6 +101,7 @@ const Spotify = {
         if (!jsonResponse.tracks) {
           return [];
         }
+        console.log(jsonResponse);
         console.log(jsonResponse.tracks.items);
         return jsonResponse.tracks.items;
       });
@@ -135,7 +136,7 @@ const Spotify = {
       .then((jsonResponse) => {
         const userId = jsonResponse.id;
         return fetch(
-          `https://api.spotify.com/v1/users/${userId}/playlists/${ID}/tracks`,
+          `https://api.spotify.com/v1/users/${userId}/playlists/${ID}`,
           {
             headers: headers,
             method: 'GET',
@@ -143,15 +144,7 @@ const Spotify = {
         )
           .then((respond) => respond.json())
           .then((response) => {
-            const responseArray = response.items.map((track) => ({
-              album: track.track.album,
-              artists: track.track.artists,
-              id: track.track.id,
-              name: track.track.name,
-              uri: track.track.uri,
-            }));
-            console.log(responseArray);
-            return responseArray;
+            return response;
           });
       });
   },

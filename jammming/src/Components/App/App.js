@@ -31,7 +31,7 @@ class App extends React.Component {
     Spotify.getPlaylist(ID).then((playlist) => {
       this.setState({
         playlistName: playlist.name,
-        playlistTracks: playlist,
+        playlistTracks: playlist.tracks.items.map((item) => item.track),
         editingPlaylist: true,
       });
     });
