@@ -30,9 +30,11 @@ export class APlaylist extends Component {
           <button className="play" onClick={this.play}>
             Play
           </button>
-          <button className="edit" onClick={this.startEditing}>
-            Edit
-          </button>
+          {this.props.playlist.owner.display_name === this.props.userName && (
+            <button className="edit" onClick={this.startEditing}>
+              Edit
+            </button>
+          )}
           <button className="delete" onClick={this.delete}>
             Delete
           </button>

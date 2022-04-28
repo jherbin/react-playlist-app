@@ -157,6 +157,7 @@ class App extends React.Component {
               startEditing={this.startEditingPlaylist}
               creatingNewPlaylist={this.state.creatingNewPlaylist}
               onCreate={this.startCreatingNewPlaylist}
+              userName={this.state.userName}
             />
           </div>
         </div>

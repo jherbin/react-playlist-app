@@ -30,6 +30,7 @@ export class Playlist extends Component {
               </button>
             )}
             <PlaylistList
+              userName={this.props.userName}
               playlists={this.props.playlists}
               deletePlaylist={this.props.deletePlaylist}
               startEditing={this.props.startEditing}

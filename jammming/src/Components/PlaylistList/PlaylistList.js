@@ -7,6 +7,7 @@ export class PlaylistList extends Component {
       <div className="PlaylistList">
         {this.props.playlists.map((playlist) => (
           <APlaylist
+            userName={this.props.userName}
             key={playlist.id}
             playlist={playlist}
             deletePlaylist={this.props.deletePlaylist}
