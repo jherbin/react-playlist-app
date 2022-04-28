@@ -16,25 +16,52 @@ class App extends React.Component {
     this.switchEditingPlaylist = this.switchEditingPlaylist.bind(this);
     this.deletePlaylist = this.deletePlaylist.bind(this);
     this.startEditingPlaylist = this.startEditingPlaylist.bind(this);
+    this.finishEditingPlaylist = this.finishEditingPlaylist.bind(this);
+    this.startCreatingNewPlaylist = this.startCreatingNewPlaylist.bind(this);
 
     this.state = {
       userName: '',
       SearchResults: [],
       playlistName: 'Playlist name',
       playlistTracks: [],
+      playlistId: '',
       editingPlaylist: false,
+      creatingNewPlaylist: false,
       Playlists: [],
     };
+  }
+
+  startCreatingNewPlaylist() {
+    this.setState({
+      playlistName: 'Playlist name',
+      playlistTracks: [],
+      editingPlaylist: true,
+      creatingNewPlaylist: true,
+      playlistId: '',
+    });
   }
 
   startEditingPlaylist(ID) {
     Spotify.getPlaylist(ID).then((playlist) => {
       this.setState({
         playlistName: playlist.name,
+        playlistId: playlist.id,
         playlistTracks: playlist.tracks.items.map((item) => item.track),
         editingPlaylist: true,
       });
     });
+  }
+
+  finishEditingPlaylist() {
+    const trackUris = this.state.playlistTracks.map((track) => track.uri);
+    Spotify.changePlaylistItems(this.state.playlistId, trackUris)
+      .then(
+        Spotify.changePlaylistName(
+          this.state.playlistId,
+          this.state.playlistName
+        )
+      )
+      .then(this.switchEditingPlaylist());
   }
 
   deletePlaylist(ID) {
@@ -50,7 +77,9 @@ class App extends React.Component {
     this.setState({ editingPlaylist: !this.state.editingPlaylist });
     if (this.state.editingPlaylist)
       Spotify.getPlaylists().then((playlists) =>
-        this.setState({ Playlists: playlists })
+        setTimeout(() => {
+          this.setState({ Playlists: playlists });
+        }, 1500)
       );
   }
   addTrack(track) {
@@ -72,12 +101,14 @@ class App extends React.Component {
 
   savePlaylist() {
     const trackUris = this.state.playlistTracks.map((track) => track.uri);
-    Spotify.savePlaylist(this.state.playlistName, trackUris).then(() => {
-      this.setState({
-        playlistName: 'New Playlist',
-        playlistTracks: [],
-      });
-    });
+    Spotify.savePlaylist(this.state.playlistName, trackUris)
+      .then(() => {
+        this.setState({
+          playlistName: 'New Playlist',
+          playlistTracks: [],
+        });
+      })
+      .then(this.switchEditingPlaylist());
   }
   search(term) {
     Spotify.search(term).then((SearchResults) => {
@@ -95,10 +126,14 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>
-          Ja<span className="highlight">mmm</span>ing
-        </h1>
-        <div className="userName">Logged as: {this.state.userName}</div>
+        <header className="header">
+          <h1>
+            Ja<span className="highlight">mmm</span>ing
+          </h1>
+          <h1 className="userName">
+            Logged as: <span className="highlight">{this.state.userName}</span>
+          </h1>
+        </header>
         <div className="App">
           <SearchBar onSearch={this.search} />
           <div className="App-playlist">
@@ -111,13 +146,17 @@ class App extends React.Component {
               isEditing={this.state.editingPlaylist}
               playlistName={this.state.playlistName}
               playlistTracks={this.state.playlistTracks}
+              playlistId={this.state.playlistId}
               showingPlaylist={this.state.showingPlaylist}
               onRemove={this.removeTrack}
               onNameChange={this.updatePlaylistName}
               onSave={this.savePlaylist}
+              onUpdate={this.finishEditingPlaylist}
               playlists={this.state.Playlists}
               deletePlaylist={this.deletePlaylist}
               startEditing={this.startEditingPlaylist}
+              creatingNewPlaylist={this.state.creatingNewPlaylist}
+              onCreate={this.startCreatingNewPlaylist}
             />
           </div>
         </div>

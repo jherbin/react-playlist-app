@@ -101,8 +101,6 @@ const Spotify = {
         if (!jsonResponse.tracks) {
           return [];
         }
-        console.log(jsonResponse);
-        console.log(jsonResponse.tracks.items);
         return jsonResponse.tracks.items;
       });
   },

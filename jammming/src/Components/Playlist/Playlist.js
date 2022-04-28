@@ -24,14 +24,19 @@ export class Playlist extends Component {
       <div className="Playlist">
         {!this.props.isEditing && (
           <div>
-            <button className="Playlist-switch" onClick={this.props.onSwitch}>
-              Show current playlist
-            </button>
+            {this.props.playlistTracks.length > 0 && (
+              <button className="Playlist-switch" onClick={this.props.onSwitch}>
+                Current Playlist
+              </button>
+            )}
             <PlaylistList
               playlists={this.props.playlists}
               deletePlaylist={this.props.deletePlaylist}
               startEditing={this.props.startEditing}
             />
+            <button className="Playlist-switch" onClick={this.props.onCreate}>
+              Create New Playlist
+            </button>
           </div>
         )}
         {this.props.isEditing && (
@@ -49,8 +54,13 @@ export class Playlist extends Component {
               onRemove={this.props.onRemove}
               isRemoval={true}
             />
-            <button className="Playlist-save" onClick={this.props.onSave}>
-              SAVE TO SPOTIFY
+            <button
+              className="Playlist-save"
+              onClick={
+                this.props.playlistId ? this.props.onUpdate : this.props.onSave
+              }
+            >
+              Submit
             </button>
           </div>
         )}
