@@ -1,6 +1,6 @@
 let accessToken;
 const clientId = 'f35722a48cc9476bb850f6119d771fd9';
-const redirectUri = window.location.href;
+const redirectUri = 'http://sweetplaylist123.surge.sh';
 
 const Spotify = {
   getAccessToken() {

@@ -79,7 +79,7 @@ class App extends React.Component {
       Spotify.getPlaylists().then((playlists) =>
         setTimeout(() => {
           this.setState({ Playlists: playlists });
-        }, 1500)
+        }, 2500)
       );
   }
   addTrack(track) {
